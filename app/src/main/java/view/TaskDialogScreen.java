@@ -191,7 +191,7 @@ public class TaskDialogScreen extends javax.swing.JDialog {
     private void jLabelToolbarSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelToolbarSaveMouseClicked
         try {
            Task task = new Task();
-           task.setIdProject(2);
+           task.setIdProject(project.getId());
            task.setName(jTextFieldTaskName.getText());
            task.setDescription(jTextAreaTaskDescription.getText());
            task.setIsCompleted(false);
@@ -208,6 +208,7 @@ public class TaskDialogScreen extends javax.swing.JDialog {
             
             
             controller.save(task);
+           // System.out.println(task);
             JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso");
 
         } catch (Exception e) {   

@@ -45,7 +45,7 @@ public class TaskController {
             statement.setDate(7, new Date(task.getCreatedAt().getTime()));
             statement.setDate(8, new java.sql.Date(Calendar.getInstance().getTime().getTime()));
             
-            statement.execute();
+            System.out.println(task.isIsCompleted());
         } catch(Exception ex){
             throw new RuntimeException("Erro ao salvar tarefa no banco de dados" + ex.getMessage());
         } finally{
@@ -53,14 +53,14 @@ public class TaskController {
         }
         
     }
-    public void update(Task task) throws SQLException{
+    public void update(Task task){
         String sql = "UPDATE tasks SET "
-                + "idProject = ?"
-                + " name = ?,"
+                + "idProject = ?,"
+                + "name = ?,"
                 + "description = ?,"
                 + "completed = ?,"
                 + "notes = ?,"
-                + "deadlines = ?,"
+                + "deadline = ?,"
                 + "createdAt = ?,"
                 + "updatedAt = ?"
                 + "WHERE id  = ?";
@@ -83,6 +83,7 @@ public class TaskController {
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
             statement.setInt(9, task.getId());
             statement.execute();
+            System.out.println(statement);
         }catch (Exception ex){
             throw new RuntimeException("Erro ao atualizar informações no banco de dados" + ex.getMessage());
         } finally{
@@ -90,7 +91,7 @@ public class TaskController {
         }
             
     }
-    public void removeById(int taskId) throws SQLException{
+    public void removeById(int taskId){
         String sql = "DELETE FROM tasks WHERE id = ?"; //comando a ser executado no BD
         Connection conn = null; //crio a variavel do tipo Connection
         PreparedStatement statement = null; // Crio a variavel tipo PreparedStatement
@@ -141,12 +142,12 @@ public class TaskController {
                 Task task = new Task();
                 //Uso o metodo set passando como parametro o resultado que está no resultSet informando o nome dos campos
                 task.setId(resultSet.getInt("id"));
-                task.setId(resultSet.getInt("idProjetct"));
+                task.setId(resultSet.getInt("idProject"));
                 task.setName(resultSet.getString("name"));
                 task.setDescription(resultSet.getString("description"));
                 task.setNotes(resultSet.getString("notes"));
                 task.setIsCompleted(resultSet.getBoolean("completed"));
-                task.setDeadline(resultSet.getDate("description"));
+                task.setDeadline(resultSet.getDate("deadline"));
                 task.setCreatedAt(resultSet.getDate("createdAt"));
                 task.setUpdatedAt(resultSet.getDate("updatedAt"));
                 
